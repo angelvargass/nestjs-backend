@@ -8,11 +8,15 @@ export class UsersService {
     constructor(@InjectRepository(User) private userRepository: UserRepository) {
     }
 
-    findAll(): Promise<User[]> {
+     findAll(): Promise<User[]> {
         return this.userRepository.find();
     }
 
     create(user: User): Promise<User> {
         return this.userRepository.save(user);
+    }
+
+    findOne(email: string): Promise<User> {
+        return this.userRepository.findOneBy({email: email});
     }
 }

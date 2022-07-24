@@ -1,19 +1,22 @@
-import {Body, Controller, Get, Post} from '@nestjs/common';
+import {Body, Controller, Get, Post, Req, UseGuards} from '@nestjs/common';
 import {UsersService} from './users.service';
 import {User} from "../entities/user.entity";
+import {JwtAuthGuard} from "../auth/jwt-auth.guard";
+import { Request } from 'express';
 
 @Controller('users')
 export class UsersController {
     constructor(private userService: UsersService) {
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get()
-    getHello(): Promise<User[]> {
-        return this.userService.findAll();
+    async getUsers(@Req() request: Request): Promise<User[]> {
+        return await this.userService.findAll();
     }
 
     @Post()
-    create(@Body() user: User): Promise<User> {
+    async create(@Body() user: User): Promise<User> {
         return this.userService.create(user);
     }
 }

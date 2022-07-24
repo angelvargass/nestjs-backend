@@ -6,11 +6,13 @@ import {ConfigModule} from '@nestjs/config';
 import {UsersModule} from './users/users.module';
 import configuration from './config/configuration';
 import {User} from "./entities/user.entity";
+import {AuthModule} from './auth/auth.module';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             load: [configuration],
+            isGlobal: true,
         }),
         TypeOrmModule.forRoot({
             type: 'postgres',
@@ -23,6 +25,7 @@ import {User} from "./entities/user.entity";
             synchronize: true,
         }),
         UsersModule,
+        AuthModule,
     ],
     controllers: [AppController],
     providers: [AppService],
