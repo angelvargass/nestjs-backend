@@ -2,9 +2,9 @@ FROM node:16.16 AS development
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+ENV NODE_ENV=development
 
-RUN npm install glob rimraf
+COPY package*.json ./
 
 RUN npm install
 
@@ -14,8 +14,7 @@ RUN npm run build
 
 FROM node:16.16 as production
 
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
+ENV NODE_ENV=production
 
 WORKDIR /usr/src/app
 

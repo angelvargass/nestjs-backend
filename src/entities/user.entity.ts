@@ -1,4 +1,6 @@
-import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany} from 'typeorm';
+import {UserRoles} from "../enums/user-roles.enum";
+import {UserToOrganization} from "./user-to-organization.entity";
 
 @Entity('USERS')
 export class User {
@@ -20,6 +22,12 @@ export class User {
     @Column({type: 'boolean', default: true})
     isActive: boolean;
 
-    @Column({type: "date", default: new Date()})
+    @Column({type: 'date', default: new Date()})
     joined: Date;
+
+    @Column({type: 'text', default: UserRoles.USER})
+    role: string;
+
+    @OneToMany(() => UserToOrganization, userToOrganization => userToOrganization.user)
+    userToOrganizations: UserToOrganization[];
 }

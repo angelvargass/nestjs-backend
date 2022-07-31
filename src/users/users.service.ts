@@ -32,6 +32,7 @@ export class UsersService {
     findUserForLogin(email: string): Promise<User> {
         return this.userRepository.createQueryBuilder('user')
             .where('user.email = :email', { email: email })
+            .where('user.isActive = :isActive', {isActive: true})
             .addSelect('user.password')
             .getOne();
     }

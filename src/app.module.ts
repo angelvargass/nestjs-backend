@@ -7,6 +7,9 @@ import {UsersModule} from './users/users.module';
 import configuration from './config/configuration';
 import {User} from "./entities/user.entity";
 import {AuthModule} from './auth/auth.module';
+import {OrganizationsModule} from './organizations/organizations.module';
+import {Organization} from "./entities/organization.entity";
+import {UserToOrganization} from "./entities/user-to-organization.entity";
 
 @Module({
     imports: [
@@ -21,11 +24,12 @@ import {AuthModule} from './auth/auth.module';
             username: process.env.DB_USERNAME,
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME,
-            entities: [User],
+            entities: [User, Organization, UserToOrganization],
             synchronize: true,
         }),
         UsersModule,
         AuthModule,
+        OrganizationsModule,
     ],
     controllers: [AppController],
     providers: [AppService],
