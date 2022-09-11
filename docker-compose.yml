@@ -13,8 +13,6 @@ services:
     ports:
       - "3000:3000"
       - "9229:9229"
-    networks:
-      - nesjs-network
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -22,7 +20,7 @@ services:
       - redis
       - db
 
-  db:
+  postgres:
     image: postgres
     restart: always
     environment:
@@ -37,6 +35,4 @@ services:
   redis:
     image: "redis:alpine"
 
-networks:
-  nesjs-network:
 
